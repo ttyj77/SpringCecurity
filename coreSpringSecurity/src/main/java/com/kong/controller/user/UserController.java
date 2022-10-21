@@ -4,19 +4,17 @@ import java.security.Principal;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.kong.domain.Account;
 import com.kong.domain.AccountDto;
 import com.kong.service.UserService;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 
@@ -28,10 +26,10 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@GetMapping(value = "/mypage")
-	public String myPage() throws Exception {
-		return "user/mypage";
-	}
+//	@GetMapping(value = "/mypage")
+//	public String myPage() throws Exception {
+//		return "user/mypage";
+//	}
 
 	@GetMapping("/users")
 	public String createUser() {
@@ -49,9 +47,22 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-//	@GetMapping("/mypage")
-//	public String mypage(@AuthenticationPrincipal Account account, Authentication authentication, Principal principal) throws Exception{
-//		return "user/mapage";
-//	}
+	@GetMapping("/mypage")
+	public String mypage(@AuthenticationPrincipal Account account, Authentication authentication, Principal principal,Model model) throws Exception{
+		System.out.println("Account============================"+account);
+		System.out.println("authentication============================"+authentication);
+		System.out.println("principal============================"+principal);
+		
+		model.addAttribute("id",account.getId());
+		model.addAttribute("name", account.getName());
+		model.addAttribute("address", account.getAddress());
+		model.addAttribute("email", account.getEmail());
+		model.addAttribute("telephone", account.getTelephone());
+		model.addAttribute("birth", account.getBirth());
+		System.out.println("Model getId ======================"+ model);
+		
+		
+		return "user/mypage";
+	}
 
 }
