@@ -1,5 +1,6 @@
 package com.kong.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import lombok.Data;
 @Entity
 @Data
 
-public class Account {
+public class Account implements Serializable {
 	
 	@Id
 	@GeneratedValue

@@ -6,7 +6,7 @@
 <body>
 	<div th:replace="layout/top::header"></div>
 	<div class="container">
-		< class="row align-items-start">
+		<div class="row align-items-start">
 			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
 				<div class="sidebar-sticky">
 					<ul class="nav flex-column">
@@ -14,8 +14,8 @@
 							<div style="padding-top:10px;" class="nav flex-column nav-pills"
 								aria-orientation="vertical">
 								<a th:href="@{/}" style="margin:5px;" class="nav-link text-primary">대시보드</a>
-								<a th:href="@{/mypage}" style="margin:5px;" class="nav-link active">마이페이지</a>
-								<a th:href="@{/messages}" style="margin:5px;" class="nav-link text-primary">메시지</a>
+								<a th:href="@{/mypage}" style="margin:5px;" class="nav-link text-primary">마이페이지</a>
+								<a th:href="@{/messages}" style="margin:5px;" class="nav-link active">메시지</a>
 								<a th:href="@{/config}" style="margin:5px;" class="nav-link text-primary">환경설정</a>
 							</div>
 						</li>
@@ -23,24 +23,20 @@
 				</div>
 			</nav>
 			<div style="padding-top:50px;" class="col">
+			<form class="form-horizontal" th:action="@{/update}" method="post">
 				<div class="container text-center">
 					<h1 class="text-primary">여기는 MYPAGE 입니다.</h1>
-					<h5>닉네임</h5>
-					<div class="input-group input-group-static mb-4">
-						<!--<input type="text" class="form-control" name="username" placeholder="아이디" required="required" 
-							autofocus="autofocus">-->
-						<h1> 아이디 </h1></br> 
+					<form th:object="${account}" method="post" action="/mypage">
+						<div> <input type="text" th:value="${account.id}" name="id"></div>
+						<div> <input type="text" th:value="${account.name}" name="name"></div>
+						<div><input type="text" th:value="${account.address}" name="address"></div>
+						<div><input type="text" th:value="${account.telephone}" name="telephone"></div>
+						<div><input type="date" th:value="${account.birth}" name="birth"></div>
+						<div><input type="text" th:value="${account.email}" name="email"></div>
+						<div><input type="text" th:value="${account.password}" name="password"></div>
+						<div><input type="text" th:value="${account.role}" name="role"></div>
 						
-						 <span th:text="${id}" />
-						<h1> 현재 비밀번호 </h1>
-						<h1> 새 비밀번호 확인 </h1><
-						<h1> 이름 </h1></br> <span th:text="${name}" />
-						<h1> 주소 </h1></br>  <span th:text="${address}" /> 
-						<h1> 이메일 </h1></br>  <span th:text="${email}" />> 
-						<h1> 휴대폰번호 </h1></br>  <span th:text="${telephone}" />
-						<h1> 생년월일 </h1></br>  <span th:text="${birth}" />
-					</div>
-				
+						<button type="Submit" class="btn btn-dark btn-lg">수정하기</button>
 				</div>
 			</div>
 		</div>
@@ -49,70 +45,3 @@
 </body>
 
 </html>
-
-<!--<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/header::userHead"></head>
-<body>
-<div id="wrapper">
-    <header class="bg-gradient-dark">
-        <th:block th:replace="/layout/fragment/navbar :: navbarFragment"></th:block>
-        <div class="page-header min-vh-50" id="background">
-            <span class="mask bg-gradient-dark opacity-6"></span>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 text-center mx-auto my-auto">
-                        <h1 class="text-white">마이 페이지</h1>
-                        <span sec:authorize="isAuthenticated()"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
-        <section class="py-7">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="row justify-content-start">
-                            <form style="margin: auto" th:object="${member}">
-                                <h5>닉네임</h5>
-                                <div class="input-group input-group-static mb-4">
-                                    <input type="text" th:field="*{nickname}" th:value="*{nickname}" class="form-control"
-                                           th:id="nickname" readonly>
-                                </div>
-                                <h5>아이디</h5>
-                                <div class="input-group input-group-static mb-4">
-                                    <input type="text" th:field="*{username}" th:value="*{username}" class="form-control"
-                                           th:id="username" readonly>
-                                </div>
-                                <h5>이메일</h5>
-                                <div class="input-group input-group-static mb-4">
-                                    <input type="text" th:field="*{email}" th:value="*{email}" class="form-control"
-                                           th:id="email" readonly>
-                                </div>
-                                <a type="button" href="/checkPwd" class="btn bg-gradient-primary">회원 수정하기</a>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 ms-auto mt-lg-0 mt-4">
-                        <div class="card">
-                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                <div class="card-body text-center">
-                                    <h3 class="font-weight-normal">
-                                        <a>내 정보</a>
-                                    </h3>
-                                    <hr/>
-                                </div>
-                                <th:block th:replace="/layout/fragment/sideBar :: mypageSideBarFragment"></th:block>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-</div>
-<th:block th:replace="/layout/fragment/footer :: footerFragment"></th:block>
-</body>
-<th:block th:replace="/layout/fragment/script :: scriptFragment"></th:block> -->

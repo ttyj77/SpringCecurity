@@ -2,6 +2,7 @@ package com.kong.controller.user;
 
 import java.security.Principal;
 
+import org.hibernate.Session;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -47,18 +48,37 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	
+	@PostMapping("/update")
+	public String updateUser(AccountDto accountDto, Model model) {
+	if(accountDto != null) {
+		
+		model.addAttribute(model);
+		System.out.println("===================update model: " + model);
+		Session.update(model);
+		System.out.println("===================accountDto: " + accountDto);
+		userService.updateUser(account);
+		
+	}
+	
+		return "redirect:/";
+	}
+	
 	@GetMapping("/mypage")
 	public String mypage(@AuthenticationPrincipal Account account, Authentication authentication, Principal principal,Model model) throws Exception{
 		System.out.println("Account============================"+account);
 		System.out.println("authentication============================"+authentication);
 		System.out.println("principal============================"+principal);
 		
-		model.addAttribute("id",account.getId());
-		model.addAttribute("name", account.getName());
-		model.addAttribute("address", account.getAddress());
-		model.addAttribute("email", account.getEmail());
-		model.addAttribute("telephone", account.getTelephone());
-		model.addAttribute("birth", account.getBirth());
+//		model.addAttribute("id",account.getId());
+//		model.addAttribute("name", account.getName());
+//		model.addAttribute("address", account.getAddress());
+//		model.addAttribute("email", account.getEmail());
+//		model.addAttribute("telephone", account.getTelephone());
+//		model.addAttribute("birth", account.getBirth());
+		
+		model.addAttribute("account", account);
+		
 		System.out.println("Model getId ======================"+ model);
 		
 		

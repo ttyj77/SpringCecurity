@@ -8,6 +8,6 @@ public interface UserRepository extends JpaRepository<Account, Integer>{
 
 	public Account findByName(String name);
 	public Account findById(String id);
-
+	
 	
 }
